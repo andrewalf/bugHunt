@@ -1,0 +1,43 @@
+networks:
+  bug_hunting:
+
+services:
+  nginx:
+    build:
+      context: ./docker
+      dockerfile: nginx.dockerfile
+    ports:
+      - "80:80"
+    volumes:
+      - ./public:/var/www/html/public:delegated
+    depends_on:
+      - php
+      - mysql
+    networks:
+      - bug_hunting
+
+  mysql:
+    image: mariadb:10.6
+    restart: unless-stopped
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./docker/mysql:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE: homestead
+      MYSQL_USER: homestead
+      MYSQL_PASSWORD: secret
+      MYSQL_ROOT_PASSWORD: secret
+    networks:
+      - bug_hunting
+
+  php:
+    build:
+      context: ./docker
+      dockerfile: php.dockerfile
+    ports:
+      - "9000:9000"
+    volumes:
+      - .:/var/www/html:delegated
+    networks:
+      - bug_hunting
