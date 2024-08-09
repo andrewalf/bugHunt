@@ -2,7 +2,10 @@
 
 namespace App\Service;
 
-class ProductImageService
+/**
+ * Этот класс менять нельзя.
+ */
+final class ProductImageService
 {
     /**
      * @throws \Exception
