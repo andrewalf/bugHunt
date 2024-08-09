@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Models\Product;
+use Illuminate\Foundation\Http\FormRequest;
 
 class ProductController extends Controller
 {
@@ -25,7 +26,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        return view('product.create');
     }
 
     /**
@@ -33,7 +34,9 @@ class ProductController extends Controller
      */
     public function store(StoreProductRequest $request)
     {
-        //
+        Product::create($request->all());
+
+        return redirect()->route('product.list')->with('success', 'Продукт успешно создан!');
     }
 
     /**
@@ -49,15 +52,25 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        dd('edit form');
+        return view('product.edit', compact('product'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateProductRequest $request, Product $product)
+    public function update(FormRequest $request, Product $product)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'price' => 'required',
+            'stock' => 'required',
+            'is_visible' => 'required|boolean',
+        ]);
+
+        $product->update($request->all());
+
+        return redirect()->route('products.list')->with('success', 'Продукт успешно обновлен!');
     }
 
     /**
@@ -65,7 +78,7 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-//        $product->delete();
+        $product->delete();
 
         return redirect()->route('products.list')
             ->with('success', 'Продукт успешно удален!');
