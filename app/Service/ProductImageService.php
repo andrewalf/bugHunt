@@ -20,6 +20,6 @@ final class ProductImageService
             throw new \Exception('Request to something unexpectedly failed');
         }
 
-        return 'https://picsum.photos/250';
+        return 'https://placehold.co/250';
     }
 }

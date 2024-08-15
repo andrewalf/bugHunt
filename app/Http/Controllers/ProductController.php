@@ -29,6 +29,12 @@ class ProductController extends Controller
         return view('product.create');
     }
 
+
+    public function import()
+    {
+        return view('product.import');
+    }
+
     /**
      * Store a newly created resource in storage.
      */

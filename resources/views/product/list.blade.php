@@ -4,9 +4,9 @@
 
 @section('content')
     <div class="mb-3">
-        <button class="btn btn-primary">Экспорт в CSV</button>
-        <button class="btn btn-secondary">Импорт из CSV</button>
-        <button class="btn btn-info">Скачать шаблон</button>
+        <a href="{{ route('products.export') }}" class="btn btn-primary">Экспорт в CSV</a>
+        <a href="{{ route('products.forms.import') }}" class="btn btn-secondary">Импорт из CSV</a>
+        <a href="{{ route('products.import_example') }}" class="btn btn-info">Скачать шаблон</a>
         <a href="{{route('products.forms.create') }}" class="btn btn-success">Добавить</a>
     </div>
 
