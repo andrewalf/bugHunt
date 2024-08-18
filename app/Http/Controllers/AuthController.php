@@ -21,7 +21,6 @@ class AuthController extends Controller
         foreach ($users as $user) {
             if ($user->email == $request->email && $user->password == $request->password) {
                 setcookie(self::LOGIN_COOKIE_NAME, $user->id, time() + (86400 * 30), "/");
-                $request->session()->put('user', $user);
                 return redirect()->route('products.list');
             }
         }
@@ -56,14 +55,12 @@ class AuthController extends Controller
         ]);
 
         setcookie(self::LOGIN_COOKIE_NAME, $user->id, time() + (86400 * 30), "/");
-        $request->session()->put('user', $user);
         return redirect()->route('products.list');
     }
 
     public function logout(Request $request)
     {
         setcookie(self::LOGIN_COOKIE_NAME, '', time() - 3600, '/');
-        $request->session()->forget('user');
         return redirect('/');
     }
 }
