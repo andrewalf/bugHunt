@@ -37,9 +37,9 @@ class Product extends Model
         ];
     }
 
-    public function getIsVisibleAttribute($value): string
+    public function getIsVisibleAttribute(): string
     {
-        return $value ? 'Да' : 'Нет';
+        return $this->attributes['is_visible'] === 1 ? 'Да' : 'Нет';
     }
 
     /**

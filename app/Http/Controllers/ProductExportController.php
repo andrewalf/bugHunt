@@ -20,7 +20,7 @@ class ProductExportController extends Controller
                 $product->description,
                 $product->price,
                 $product->stock,
-                $product->getIsVisibleAttribute($product->is_visible),
+                $product->getIsVisibleAttribute(),
             ]);
         }
 
