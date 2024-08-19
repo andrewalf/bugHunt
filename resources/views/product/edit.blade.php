@@ -38,7 +38,7 @@
             </div>
 
             <div class="form-group">
-                <label for="is_visible">Вилимость</label>
+                <label for="is_visible">Видимость</label>
                 <select class="form-control @error('is_visible') is-invalid @enderror" id="is_visible" name="is_visible" required>
                     <option value="1" {{ old('is_visible', $product->is_visible) == '1' ? 'selected' : '' }}>Видно</option>
                     <option value="0" {{ old('is_visible', $product->is_visible) == '0' ? 'selected' : '' }}>Не видно</option>
