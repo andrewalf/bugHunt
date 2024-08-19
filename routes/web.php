@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\LogController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductExportController;
 use App\Http\Controllers\ProductImportController;
@@ -32,3 +33,5 @@ Route::withoutMiddleware([SuperPuperAuthMiddleware::class])->prefix('auth')->gro
     Route::post('/register', [AuthController::class, 'register'])->name('auth.register');
     Route::get('/logout', [AuthController::class, 'logout'])->name('auth.logout');
 });
+
+Route::get('/logs', [LogController::class, 'index']);
