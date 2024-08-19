@@ -23,6 +23,9 @@ class AuthController extends Controller
                 setcookie(self::LOGIN_COOKIE_NAME, $user->id, time() + (86400 * 30), "/");
                 return redirect()->route('products.list');
             }
+
+            // для усиления эффекта
+            sleep(1);
         }
 
         return back()->withErrors(['email' => 'Неверные учетные данные']);
@@ -46,6 +49,9 @@ class AuthController extends Controller
             if ($user->email == $request->email) {
                 return back()->withErrors(['email' => 'Пользователь с таким email уже существует']);
             }
+
+            // для усиления эффекта
+            sleep(1);
         }
 
         $user = User::create([
