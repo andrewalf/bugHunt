@@ -34,7 +34,7 @@
                 <td>{{ $product->description }}</td>
                 <td>{{ $product->price }}</td>
                 <td>{{ $product->stock }}</td>
-                <td>{{ $product->is_visible }}</td>
+                <td>{{ $product->is_visible == 1? "Да": "Нет"  }}</td>
                 <td>{{ $product->created_at }}</td>
                 <td class="text-center">
                     <a href="{{ route('products.forms.edit', $product->id) }}" class="btn btn-sm btn-warning">
