@@ -15,18 +15,6 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        $user = User::whereEmail($request->email)->first();
-        $password = $user->password;
-        $algInfo = password_get_info($password);
-
-        if ($algInfo['algo'] === NULL) {
-            $user->password = password_hash($password, PASSWORD_BCRYPT, [12]);
-            $user ->save();
-        }
-
-        //Проверяю был ли Хеширован пароль, если не был, хэширую
-
-
         $credentials = $request->validate([
             'email' => ['required', 'email'],
             'password' => ['required'],
