@@ -32,10 +32,9 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-    public function setPasswordAttribute($value)
-    {
-        $this->attributes['password'] = bcrypt($value);
-    }
+    protected $casts = [
+        'password'=> 'hashed',
+    ];
 
     /**
      * Get the attributes that should be cast.

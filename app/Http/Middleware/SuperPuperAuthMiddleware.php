@@ -2,26 +2,12 @@
 
 namespace App\Http\Middleware;
 
-use App\Models\User;
-use Closure;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\View;
+use Illuminate\Auth\Middleware\Authenticate;
 
-class SuperPuperAuthMiddleware
+class SuperPuperAuthMiddleware extends Authenticate
 {
-    public function handle(Request $request, Closure $next)
+    protected function redirectTo($request)
     {
-        if (!Auth::check()) {
-            return redirect()->route('auth.forms.login');
-        }
-
-        if (!$request->user()) {
-            return redirect()->route('auth.forms.login')->withErrors(['email' => 'Пользователь не найден']);
-        }
-
-        View::share('logged_user', $request->user());
-
-        return $next($request);
+        return 'auth/login';
     }
 }
