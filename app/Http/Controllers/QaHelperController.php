@@ -43,6 +43,6 @@ class QaHelperController extends Controller
             return response()->json(['error' => 'git pull after git fetch failed'], 500);
         }
 
-        return response()->json(['success' => 'Checked out to ' . $branchOrCommit], 200);
+        return response()->json(['success' => 'Checked out to ' . $branch], 200);
     }
 }
