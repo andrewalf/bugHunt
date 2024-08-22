@@ -35,12 +35,10 @@ class ProductImportController extends Controller
         $file = fopen($request->file('csv_file')->getRealPath(), 'r');
 
 //         Пропускаем первую строку (заголовок)
-        $i = 0;
+
+        fgetcsv($file);
+
         while (($row = fgetcsv($file, 1000, ',')) !== false) {
-            if ($i === 0) {
-                $i++;
-                continue;
-            }
             (new Product([
                 'name' => $row[1],
                 'description' => $row[2],
