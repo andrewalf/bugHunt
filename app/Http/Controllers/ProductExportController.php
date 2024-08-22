@@ -20,7 +20,7 @@ class ProductExportController extends Controller
                 $product->description,
                 $product->price,
                 $product->stock,
-                $product->is_visible = 1?"Да":"Нет",
+                $product->is_visible == 1?"Да":"Нет",
                 $product->created_at,
                 $product->getImageUrl()
             ]);
