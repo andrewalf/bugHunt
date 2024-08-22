@@ -12,10 +12,10 @@ class ProductImportController extends Controller
     {
         $filePath = storage_path('app/import_example.csv');
         $file = fopen($filePath, 'w');
-        fputcsv($file, ['ID', 'Название', 'Опсание', 'Цена', 'Остаток', 'Видимость','Время создания','URL изображения']);
+        fputcsv($file, ['ID', 'Название', 'Опсание', 'Цена', 'Остаток', 'Видимость','URL изображения']);
 
-        foreach ([['Example Product 1', 'Description for product 1', '19.99', '100', '1', '2024-08-22 01:55:36', 'https://placehold.co/250'],
-                     ['Example Product 2', 'Description for product 2', '29.99', '200', '0', '2022-06-29 00:00:00', 'https://placehold.co/250']] as $row) {
+        foreach ([['Example Product 1', 'Description for product 1', '19.99', '100', '1', 'https://placehold.co/250'],
+                     ['Example Product 2', 'Description for product 2', '29.99', '200', '0', 'https://placehold.co/250']] as $row) {
             fputcsv($file, $row);
         }
 
