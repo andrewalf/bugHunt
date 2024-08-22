@@ -11,7 +11,7 @@ class ProductExportController extends Controller
     {
         $products = Product::all();
         $file = fopen('php://memory', 'w');
-        fputcsv($file, ['ID', 'Название', 'Описание', 'Цена', 'Остаток', 'Видимость']);
+        fputcsv($file, ['ID', 'Название', 'Описание', 'Цена', 'Остаток', 'Видимость', 'Время создания', 'URL изображения']);
 
         foreach ($products as $product) {
             fputcsv($file, [
@@ -20,7 +20,9 @@ class ProductExportController extends Controller
                 $product->description,
                 $product->price,
                 $product->stock,
-                $product->getIsVisibleAttribute(),
+                $product->is_visible = 1?"Да":"Нет",
+                $product->created_at,
+                $product->getImageUrl()
             ]);
         }
 
@@ -28,7 +30,7 @@ class ProductExportController extends Controller
 
         return Response::streamDownload(function() use ($file) {
             fpassthru($file);
-        }, 'products.csv', [
+        }, date("Y-m-d H:i:s") .'_products.csv', [
             'Content-Type' => 'text/csv',
             'Content-Disposition' => 'attachment; filename="products.csv"',
         ]);
