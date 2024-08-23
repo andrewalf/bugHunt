@@ -15,12 +15,12 @@ class QaHelperController extends Controller
             return response()->json(['error' => 'branch param?'], 500);
         }
 
-//        $process = new Process(['git', 'fetch', '--all'], getcwd());
-//        $process->run();
-//
-//        if (!$process->isSuccessful()) {
-//            return response()->json(['error' => 'git fetch --all failed'], 500);
-//        }
+        $process = new Process(['git', 'fetch', '--all'], getcwd());
+        $process->run();
+
+        if (!$process->isSuccessful()) {
+            return response()->json(['error' => 'git fetch --all failed'], 500);
+        }
 
         $process = new Process(['git', 'pull'], getcwd());
         $process->run();
