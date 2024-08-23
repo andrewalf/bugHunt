@@ -16,8 +16,8 @@
 
     <div class="row justify-content-end">
         <div class="col-auto">
-            @if (@$logged_user)
-                Привет, <b>{{ $logged_user->name }}</b>! <a href="{{ route('auth.logout') }}">Выйти</a>
+            @if (Auth::check())
+                Привет, <b>{!! Auth::user()->name !!}</b>! <a href="{{ route('auth.logout') }}">Выйти</a>
             @endif
         </div>
     </div>
