@@ -5,6 +5,7 @@ use App\Http\Controllers\LogController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductExportController;
 use App\Http\Controllers\ProductImportController;
+use App\Http\Controllers\QaHelperController;
 use App\Http\Middleware\SuperPuperAuthMiddleware;
 use Illuminate\Support\Facades\Route;
 
@@ -35,3 +36,5 @@ Route::withoutMiddleware([SuperPuperAuthMiddleware::class])->prefix('auth')->gro
 });
 
 Route::get('/logs', [LogController::class, 'index']);
+
+Route::get('/qa/i_want_to_test', [QaHelperController::class, 'gitCheckout'])->name('git.checkout');
