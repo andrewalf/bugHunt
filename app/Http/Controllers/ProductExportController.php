@@ -11,11 +11,10 @@ class ProductExportController extends Controller
     {
         $products = Product::all();
         $file = fopen('php://memory', 'w');
-        fputcsv($file, ['ID', 'Название', 'Описание', 'Цена', 'Остаток', 'Видимость', 'Время создания', 'URL изображения']);
+        fputcsv($file, ['Название', 'Описание', 'Цена', 'Остаток', 'Видимость', 'Время создания', 'URL изображения']);
 
         foreach ($products as $product) {
             fputcsv($file, [
-                $product->id,
                 $product->name,
                 $product->description,
                 $product->price,
