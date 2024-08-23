@@ -40,11 +40,11 @@ class ProductImportController extends Controller
 
         while (($row = fgetcsv($file, 1000, ',')) !== false) {
             (new Product([
-                'name' => $row[1],
-                'description' => $row[2],
-                'price' => $row[3],
-                'stock' => $row[4],
-                'is_visible' => (bool)$row[5],
+                'name' => $row[0],
+                'description' => $row[1],
+                'price' => $row[2],
+                'stock' => $row[3],
+                'is_visible' => $row[4] == "Да"?1:0,
             ]))->save();
         }
 
