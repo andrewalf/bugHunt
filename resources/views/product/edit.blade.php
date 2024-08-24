@@ -1,6 +1,6 @@
 @extends('main')
 
-@section('title', 'Новый продукт')
+@section('title', 'Изменение продукта')
 
 @section('content')
     <form action="{{ route('products.update', $product->id) }}" method="POST">
