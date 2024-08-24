@@ -50,6 +50,11 @@ class Product extends Model
      */
     public function getImageUrl()
     {
-        return app(ProductImageService::class)->getRandomImageUrl();
+        try{
+            return app(ProductImageService::class)->getRandomImageUrl();
+        }catch (\Exception $e) {
+            return '';
+        }
+
     }
 }
