@@ -58,7 +58,7 @@
 
         </tbody>
     </table>
-
+    {{ $products->onEachSide(3)->links() }}
     <script>
         function confirmDelete() {
             return confirm('Вы уверены, что хотите удалить этот продукт?');
