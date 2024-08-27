@@ -37,11 +37,6 @@ class Product extends Model
         ];
     }
 
-//    public function getIsVisibleAttribute(): string
-//    {
-//        return $this->attributes['is_visible'] === 1 ? 'Да' : 'Нет';
-//    }
-
     /**
      * Реальные картинки не храним, лениво.
      * Поэтому используем заглушку.
@@ -50,6 +45,11 @@ class Product extends Model
      */
     public function getImageUrl()
     {
-        return app(ProductImageService::class)->getRandomImageUrl();
+        try{
+            return app(ProductImageService::class)->getRandomImageUrl();
+        }catch (\Exception $e) {
+            return '';
+        }
+
     }
 }
