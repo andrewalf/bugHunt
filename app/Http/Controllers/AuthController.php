@@ -4,11 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
-    const LOGIN_COOKIE_NAME = 'user_id';
-
     public function loginForm()
     {
         return view('auth.login');
@@ -16,19 +15,20 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        $users = User::all();
+        $credentials = $request->validate([
+            'email' => ['required', 'email'],
+            'password' => ['required'],
+        ]);
 
-        foreach ($users as $user) {
-            if ($user->email == $request->email && $user->password == $request->password) {
-                setcookie(self::LOGIN_COOKIE_NAME, $user->id, time() + (86400 * 30), "/");
-                return redirect()->route('products.list');
-            }
+        if (Auth::attempt($credentials)) {
+            $request->session()->regenerate();
 
-            // для усиления эффекта
-            sleep(1);
+            return redirect()->route('products.list');
         }
 
-        return back()->withErrors(['email' => 'Неверные учетные данные']);
+        return back()->withErrors([
+            'email' => 'The provided credentials do not match our records.',
+        ])->onlyInput('email');
     }
 
     public function registerForm()
@@ -39,20 +39,10 @@ class AuthController extends Controller
     public function register(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255',
+            'name' => 'required|string|alpha_num|max:255',
+            'email' => 'required|string|email:rfc,dns|max:255',
             'password' => 'required|string|confirmed',
         ]);
-
-        $users = User::all();
-        foreach ($users as $user) {
-            if ($user->email == $request->email) {
-                return back()->withErrors(['email' => 'Пользователь с таким email уже существует']);
-            }
-
-            // для усиления эффекта
-            sleep(1);
-        }
 
         $user = User::create([
             'name' => $request->name,
@@ -60,13 +50,14 @@ class AuthController extends Controller
             'password' => $request->password,
         ]);
 
-        setcookie(self::LOGIN_COOKIE_NAME, $user->id, time() + (86400 * 30), "/");
+        auth()->login($user);
         return redirect()->route('products.list');
     }
 
     public function logout(Request $request)
     {
-        setcookie(self::LOGIN_COOKIE_NAME, '', time() - 3600, '/');
+        Auth::logout();
+
         return redirect('/');
     }
 }
