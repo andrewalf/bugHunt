@@ -24,7 +24,7 @@ Route::middleware([SuperPuperAuthMiddleware::class])->prefix('products')->group(
     Route::get('/{product}/edit', [ProductController::class, 'edit'])->name('products.forms.edit');
     Route::get('/create', ProductController::class . '@create')->name('products.forms.create');
     Route::get('/create/import', ProductController::class . '@import')->name('products.forms.import');
-    Route::post('/import', [ProductImportController::class, 'index'])->name('products.import');
+    Route::post('/import/upload', ProductImportController::class . '@index')->name('products.import.upload');
 });
 
 Route::withoutMiddleware([SuperPuperAuthMiddleware::class])->prefix('auth')->group(function () {

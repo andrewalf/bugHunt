@@ -3,7 +3,7 @@
 @section('title', 'Импорт продуктов из CSV')
 
 @section('content')
-    <form action="{{ route('products.import') }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('products.import.upload') }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('POST')
 

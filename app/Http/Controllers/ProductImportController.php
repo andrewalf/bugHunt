@@ -25,7 +25,7 @@ class ProductImportController extends Controller
     public function index(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'csv_file' => 'required|file',
+            'csv_file' => 'required|mimes:csv|file',
         ]);
 
         if ($validator->fails()) {
@@ -34,17 +34,17 @@ class ProductImportController extends Controller
 
         $file = fopen($request->file('csv_file')->getRealPath(), 'r');
 
-        // Пропускаем первую строку (заголовок)
+//         Пропускаем первую строку (заголовок)
+
         fgetcsv($file);
 
         while (($row = fgetcsv($file, 1000, ',')) !== false) {
             (new Product([
-                'id' => $row[0],
-                'name' => $row[1],
-                'description' => $row[2],
-                'price' => $row[3],
-                'stock' => $row[4],
-                'is_visible' => (bool) $row[5],
+                'name' => $row[0],
+                'description' => $row[1],
+                'price' => $row[2],
+                'stock' => $row[3],
+                'is_visible' => $row[4] == "Да"?1:0,
             ]))->save();
         }
 
