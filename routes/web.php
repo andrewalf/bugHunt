@@ -18,7 +18,7 @@ Route::middleware([SuperPuperAuthMiddleware::class])->prefix('products')->group(
     Route::get('/export', [ProductExportController::class, 'index'])->name('products.export');
     Route::get('/import/example', [ProductImportController::class, 'downloadExampleFile'])->name('products.import_example');
     Route::get('/', ProductController::class . '@index')->name('products.list');
-    Route::delete('/{id}', ProductController::class . '@destroy')->name('products.delete');
+    Route::delete('/{product}', ProductController::class . '@destroy')->name('products.delete');
     Route::post('/', ProductController::class . '@store')->name('products.create');
     Route::post('/{product}', [ProductController::class, 'update'])->name('products.update');
     Route::get('/{product}/edit', [ProductController::class, 'edit'])->name('products.forms.edit');
