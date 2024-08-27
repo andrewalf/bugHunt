@@ -9,12 +9,14 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class ProductController extends Controller
 {
+    const PAGINATION_COUNT = 5;
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $products = Product::paginate(5);
+        $products = Product::paginate(self::PAGINATION_COUNT);
 
         return view('product.list', [
             'products' => $products,

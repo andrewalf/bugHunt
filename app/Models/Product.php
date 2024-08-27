@@ -37,11 +37,6 @@ class Product extends Model
         ];
     }
 
-//    public function getIsVisibleAttribute(): string
-//    {
-//        return $this->attributes['is_visible'] === 1 ? 1 : 0;
-//    }
-
     /**
      * Реальные картинки не храним, лениво.
      * Поэтому используем заглушку.
