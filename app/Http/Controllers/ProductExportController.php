@@ -2,39 +2,30 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\ProcessExportProducts;
 use App\Models\Product;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Storage;
+use PhpAmqpLib\Connection\AMQPStreamConnection;
+use PhpAmqpLib\Message\AMQPMessage;
 
 class ProductExportController extends Controller
 {
-    private const CHUNK_SIZE = 50;
+    private const CHUNK_SIZE = 1000;
     public function index()
     {
+        $connection = new AMQPStreamConnection('localhost', 5672, 'guest', 'guest');
+        $channel = $connection->channel();
+        $channel->queue_declare('hello', false, true, false, false);
 
-        $file = fopen('php://memory', 'w');
-        fputcsv($file, ['Название', 'Описание', 'Цена', 'Остаток', 'Видимость', 'Время_создания', 'URL_изображения']);
+        $msg = new AMQPMessage('Hello World!');
+        $channel->basic_publish($msg, '', 'hello');
 
-            $products = Product::chunk(self::CHUNK_SIZE, function ($products) use ($file) {
-                foreach ($products as $product) {
-                    fputcsv($file, [
-                        $product->name,
-                        $product->description,
-                        $product->price,
-                        $product->stock,
-                        $product->is_visible == 1 ? "Да" : "Нет",
-                        $product->created_at,
-                        $product->getImageUrl()
-                    ]);
-                }
-            });
+        echo " [x] Sent 'Hello World!'\n";
 
-        fseek($file, 0);
+        $channel->close();
+        $connection->close();
 
-        return Response::streamDownload(function () use ($file) {
-            fpassthru($file);
-        }, date("Y-m-d H:i:s") . '_products.csv', [
-            'Content-Type' => 'text/csv',
-            'Content-Disposition' => 'attachment; filename="products.csv"',
-        ]);
+        //этот я использовал как тестовый контроллер
     }
 }
