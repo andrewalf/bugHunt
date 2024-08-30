@@ -30,7 +30,8 @@ class ProcessExportProducts implements ShouldQueue
      */
     public function handle()
     {
-        $connection = new AMQPStreamConnection('localhost', 5672, 'guest', 'guest');
+
+        $connection = new AMQPStreamConnection('rabbitmq', 5672, 'guest', 'guest');
         $channel = $connection->channel();
 
 
