@@ -6,6 +6,7 @@ use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Models\Product;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
@@ -17,9 +18,9 @@ class ProductController extends Controller
     public function index()
     {
         $products = Product::paginate(self::PAGINATION_COUNT);
-
+        $id = Auth::id();
         return view('product.list', [
-            'products' => $products,
+            'products' => $products, 'id_user'=>$id
         ]);
     }
 
