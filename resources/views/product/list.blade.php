@@ -8,6 +8,9 @@
         <a href="{{ route('products.forms.import') }}" class="btn btn-secondary">Импорт из CSV</a>
         <a href="{{ route('products.import_example') }}" class="btn btn-info">Скачать шаблон</a>
         <a href="{{route('products.forms.create') }}" class="btn btn-success">Добавить</a>
+        @if (\Illuminate\Support\Facades\Storage::exists($id_user .'.csv'))
+        <a href="{{route('products.download') }}"  class="btn btn-success">Скачать Экспорт</a>
+        @endif
     </div>
 
     <table class="table table-striped table-bordered">

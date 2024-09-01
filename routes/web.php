@@ -16,6 +16,7 @@ Route::get('/', function () {
 //Route::middleware('auth')->prefix('products')->group(function () {
 Route::middleware([SuperPuperAuthMiddleware::class])->prefix('products')->group(function () {
     Route::get('/export', [ProductExportController::class, 'index'])->name('products.export');
+    Route::get('/export/download', [ProductExportController::class, 'download'])->name('products.download');
     Route::get('/import/example', [ProductImportController::class, 'downloadExampleFile'])->name('products.import_example');
     Route::get('/', ProductController::class . '@index')->name('products.list');
     Route::delete('/{product}', ProductController::class . '@destroy')->name('products.delete');
