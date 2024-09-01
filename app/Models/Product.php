@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Presenters\ProductPresenter;
 use App\Service\ProductImageService;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -50,6 +51,9 @@ class Product extends Model
         }catch (\Exception $e) {
             return '';
         }
+    }
 
+    public function presenter() : ProductPresenter{
+        return new ProductPresenter($this);
     }
 }
